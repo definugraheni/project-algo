@@ -1,4 +1,5 @@
 import pandas as pd
+import json
 
 def signin(name,pw):
     sukses = False
@@ -11,7 +12,7 @@ def signin(name,pw):
             break
     file.close()
     if (sukses):
-        print("Login anda berhasil", "\nSilahkan pilih opsi berikut :")
+        print("Login anda berhasil")
     else :
         print("akun anda belum terdaftar, silahkan melakukan resgistrasi")
 
@@ -50,23 +51,19 @@ accsess(option)
 
 
 def cek_harga():
-    harga_beras = {
-        "Harga" : ["Rp 11.400","Rp 10.600","Rp 11.850","Rp 10.950"],
-        "Daerah" : ["Jember","Banyuwangi","Surabaya","Probolinggo"]
-    }
-    df_beras = pd.DataFrame(harga_beras, index = range(1, (len(harga_beras["Harga"])+1)))
+    df_beras = pd.read_csv("harga_beras.csv", index_col="No.")
 
     harga_cabaimerah = {
         "Harga" : ["Rp 20.850","Rp 18.250","Rp 24.400","Rp 18.000"],
         "Daerah" : ["Jember","Banyuwangi","Surabaya","Probolinggo"]
     }
-    df_cabaimerah = pd.DataFrame(harga_cabaimerah, index = range(1, (len(harga_beras["Harga"])+1)))
+    df_cabaimerah = pd.DataFrame(harga_cabaimerah, index = range(1, (len(harga_cabaimerah["Harga"])+1)))
 
     harga_cabairawit = {
         "Harga" : ["Rp 13.400","Rp 23.500","Rp 26.900","Rp 25.000"],
         "Daerah" : ["Jember","Banyuwangi","Surabaya","Probolinggo"]
     }
-    df_cabairawit = pd.DataFrame(harga_cabairawit, index = range(1, (len(harga_beras["Harga"])+1)))
+    df_cabairawit = pd.DataFrame(harga_cabairawit, index = range(1, (len(harga_cabairawit["Harga"])+1)))
 
     komoditas = input("Komoditas yang ingin dicari : ")
     if komoditas == "beras":
@@ -77,11 +74,77 @@ def cek_harga():
         print(df_cabairawit)
 
 def jual_komoditas():
-    nama = input("Nama komoditas : ")
+    jenis_komoditas = input("1. Masukkan jenis komoditas : ")
+    nama_komoditas = input("2. Masukkan nama komoditas : ")
+    deskripsi = input("3. Masukkan deskripsi : ")
+    alamat = input("4. Masukkan alamat : ")
+    harga = input("5. Masukkan harga : ")
+    if jenis_komoditas == "beras":
+        with open("komoditas_beras.json", "r+") as data:
+            data_baru = {
+                "nama_komoditas" : jenis_komoditas, 
+                "jenis_komoditas" : nama_komoditas, 
+                "deskripsi" : deskripsi, 
+                "alamat" : alamat, 
+                "harga" : harga
+                }
+            data_beras = json.load(data)
+            data_beras["data"].append(data_baru)
+            data.seek(0)
+            json.dump(data_beras, data, indent = 4)
+    elif jenis_komoditas == "cabai merah":
+        with open("komoditas_cabaimerah.json", "r+") as data:
+            data_baru = {
+                "nama_komoditas" : jenis_komoditas, 
+                "jenis_komoditas" : nama_komoditas, 
+                "deskripsi" : deskripsi, 
+                "alamat" : alamat, 
+                "harga" : harga
+                }
+            data_cabaimerah = json.load(data)
+            data_cabaimerah["data"].append(data_baru)
+            data.seek(0)
+            json.dump(data_cabaimerah, data, indent = 4)
+    elif jenis_komoditas == "cabai rawit" :
+        with open("komoditas_cabairawit.json", "r+") as data:
+            data_baru = {
+                "nama_komoditas" : jenis_komoditas, 
+                "jenis_komoditas" : nama_komoditas, 
+                "deskripsi" : deskripsi, 
+                "alamat" : alamat, 
+                "harga" : harga
+                }
+            data_cabairawit = json.load(data)
+            data_cabairawit["data"].append(data_baru)
+            data.seek(0)
+            json.dump(data_cabairawit, data, indent = 4)
+            
+def beli_komoditas():
+    pencarian = input("Komoditas yang ingin dicari [beras/cabai merah/cabai rawit]: ")
+    if pencarian == "beras":
+        file_beras = open("komoditas_beras.json")
+        data = json.loads(file_beras.read())
+        print(f"Jenis : {data['data']['jenis_komoditas']}")
+        print(f"Nama : {data['data']['nama_komoditas']}")
+        print(f"Deskripsi : {data['data']['deskripsi']}")
+        print(f"Alamat : {data['data']['alamat']}")
+        print(f"Harga : Rp {data['data']['harga']}")
 
-opsi = ["1. Cek harga", "2. Jual Komoditas", "3. Beli Komoditas"]
-for i in opsi:
-    print(i)
-opsi_1 = int(input("Opsi : "))
-if opsi_1 == 1:
-    cek_harga()
+def menu():
+    opsi = ["1. Cek harga", "2. Jual Komoditas", "3. Beli Komoditas", "4. Exit"]
+    print("\nPilihan Menu :")
+    for i in opsi:
+        print(i)
+    opsi_1 = int(input("Opsi : "))
+    if opsi_1 == 1:
+        cek_harga()
+    elif opsi_1 == 2:
+        jual_komoditas()
+    elif opsi_1 == 3:
+        beli_komoditas()
+    elif opsi_1 == 4:
+        exit()
+
+if __name__ == "__main__":
+    while True:
+        menu()
