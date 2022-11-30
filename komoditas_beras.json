@@ -1,0 +1,18 @@
+{
+    "data": [
+        {
+            "jenis_komoditas": "beras merah",
+            "nama_komoditas": "beras",
+            "deskripsi": "warnanya merah",
+            "alamat": "Balung",
+            "harga": "13.000"
+        },
+        {
+            "nama_komoditas": "beras",
+            "jenis_komoditas": "beras pulen",
+            "deskripsi": "rasanya enak",
+            "alamat": "Wuluhan",
+            "harga": "11.300"
+        }
+    ]
+}
