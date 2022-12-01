@@ -1,18 +1,25 @@
 {
     "data": [
         {
-            "jenis_komoditas": "beras merah",
-            "nama_komoditas": "beras",
+            "jenis_komoditas": "beras",
+            "nama_komoditas": "beras merah",
             "deskripsi": "warnanya merah",
             "alamat": "Balung",
             "harga": "13.000"
         },
         {
-            "nama_komoditas": "beras",
-            "jenis_komoditas": "beras pulen",
+            "jenis_komoditas": "beras",
+            "nama_komoditas": "beras pulen",
             "deskripsi": "rasanya enak",
             "alamat": "Wuluhan",
             "harga": "11.300"
+        },
+        {
+            "jenis_komoditas": "beras",
+            "nama_komoditas": "beras high",
+            "deskripsi": "harganya mahal",
+            "alamat": "Jember",
+            "harga": "20.000"
         }
     ]
 }
