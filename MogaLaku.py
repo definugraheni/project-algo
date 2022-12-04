@@ -1,4 +1,3 @@
-from datetime import datetime
 import pandas as pd
 import json
 import os
@@ -115,7 +114,7 @@ def jual_komoditas():
             json.dump(data_beras, data, indent = 4)
             menu_kembali()
     elif jenis_komoditas == "cabai merah":
-        with open("komoditas_cabaimerah.json", "r+") as data:
+        with open("komoditas_cabai_merah.json", "r+") as data:
             data_baru = {
                 "jenis_komoditas" : nama_komoditas, 
                 "nama_komoditas" : jenis_komoditas, 
@@ -129,7 +128,7 @@ def jual_komoditas():
             json.dump(data_cabaimerah, data, indent = 4)
             menu_kembali()
     elif jenis_komoditas == "cabai rawit" :
-        with open("komoditas_cabairawit.json", "r+") as data:
+        with open("komoditas_cabai_rawit.json", "r+") as data:
             data_baru = {
                 "jenis_komoditas" : nama_komoditas, 
                 "nama_komoditas" : jenis_komoditas, 
@@ -199,7 +198,7 @@ def beli_komoditas():
                         os.system("cls")
                         break
             elif pencarian == "cabai merah":
-                file_cabaimerah = open("komoditas_cabaimerah.json")
+                file_cabaimerah = open("komoditas_cabai_merah.json")
                 data = json.loads(file_cabaimerah.read())
                 for i in range(0, len(data['data'])):
                     print(f"Kode {[i+1]}")
@@ -222,7 +221,7 @@ def beli_komoditas():
                         os.system("cls")
                         break
             elif pencarian == "cabai rawit":
-                file_cabairawit = open("komoditas_cabairawit.json")
+                file_cabairawit = open("komoditas_cabai_rawit.json")
                 data = json.loads(file_cabairawit.read())
                 for i in range(0, len(data['data'])):
                     print(f"Kode {[i+1]}")
