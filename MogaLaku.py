@@ -1,4 +1,5 @@
 import pandas as pd
+import csv
 import json
 import os
 from time import sleep
@@ -19,7 +20,10 @@ def signin(name,pw):
         os.system("cls")
     else :
         print("Akun anda belum terdaftar, silahkan melakukan registrasi")
-        exit()
+        print("Anda akan dikembalikan ke menu login")
+        sleep(2)
+        os.system("cls")
+        begin()
 
 def signup(name,pw):
     file = open('data_account.txt', "a")
@@ -62,7 +66,7 @@ def mulai():
 
 def menu_kembali():
     while True:
-        ask = input("Kembali ke menu awal?(Y/N) : ")
+        ask = input("\nKembali ke menu awal?(Y/N) : ")
         if ask == "Y" or ask == "y":
             os.system("cls")
             menu()
@@ -74,8 +78,10 @@ def cek_harga():
     df_beras = pd.read_csv("harga_beras.csv", index_col="No.")
     df_cabaimerah = pd.read_csv("harga_cabai_merah.csv", index_col="No.")
     df_cabairawit = pd.read_csv("harga_cabai_rawit.csv", index_col="No.")
-    komoditas = input("Komoditas yang ingin dicari (beras/cabai merah/cabai rawit) : ")
-    if komoditas != "beras" and komoditas != "cabai merah" and komoditas != "cabai rawit":
+    df_bawangmerah = pd.read_csv("harga_bawang_merah.csv", index_col="No.")
+    df_bawangputih = pd.read_csv("harga_bawang_putih.csv", index_col="No.")
+    komoditas = input("Komoditas yang ingin dicari : ")
+    if komoditas != "beras" and komoditas != "cabai merah" and komoditas != "cabai rawit" and komoditas != "bawang putih" and komoditas != "bawang merah":
         cek_harga()
     else:
         if komoditas == "beras":
@@ -90,6 +96,14 @@ def cek_harga():
             print(df_cabairawit)
             print()
             menu_kembali()
+        elif komoditas == "bawang merah":
+            print(df_bawangmerah)
+            print()
+            menu_kembali()
+        elif komoditas == "bawang putih":
+            print(df_bawangputih)
+            print()
+            menu_kembali()
             
 
 def jual_komoditas():
@@ -99,56 +113,38 @@ def jual_komoditas():
     deskripsi = input("3. Masukkan deskripsi : ")
     alamat = input("4. Masukkan alamat : ")
     harga = float(input("5. Masukkan harga : "))
-    if jenis_komoditas == "beras":
-        with open("komoditas_beras.json", "r+") as data:
-            data_baru = {
-                "jenis_komoditas" : nama_komoditas, 
-                "nama_komoditas" : jenis_komoditas, 
-                "deskripsi" : deskripsi, 
-                "alamat" : alamat, 
-                "harga" : harga
-                }
-            data_beras = json.load(data)
-            data_beras["data"].append(data_baru)
-            data.seek(0)
-            json.dump(data_beras, data, indent = 4)
+    if jenis_komoditas == "cabai merah":
+        with open("komoditas_cabai_merah.csv", "a") as file:
+            kolom = ["jenis komoditas","nama komoditas","deskripsi","alamat","harga"]
+            writer = csv.DictWriter(file, fieldnames=kolom)
+            writer.writerow({'jenis komoditas' : jenis_komoditas, 'nama komoditas' : nama_komoditas, 'deskripsi' : deskripsi, 'alamat' : alamat, 'harga' : harga})
             menu_kembali()
-    elif jenis_komoditas == "cabai merah":
-        with open("komoditas_cabai_merah.json", "r+") as data:
-            data_baru = {
-                "jenis_komoditas" : nama_komoditas, 
-                "nama_komoditas" : jenis_komoditas, 
-                "deskripsi" : deskripsi, 
-                "alamat" : alamat, 
-                "harga" : harga
-                }
-            data_cabaimerah = json.load(data)
-            data_cabaimerah["data"].append(data_baru)
-            data.seek(0)
-            json.dump(data_cabaimerah, data, indent = 4)
+    elif jenis_komoditas == "cabai rawit":
+        with open("komoditas_cabai_rawit.csv", "a") as file:
+            kolom = ["jenis komoditas","nama komoditas","deskripsi","alamat","harga"]
+            writer = csv.DictWriter(file, fieldnames=kolom)
+            writer.writerow({'jenis komoditas' : jenis_komoditas, 'nama komoditas' : nama_komoditas, 'deskripsi' : deskripsi, 'alamat' : alamat, 'harga' : harga})
             menu_kembali()
-    elif jenis_komoditas == "cabai rawit" :
-        with open("komoditas_cabai_rawit.json", "r+") as data:
-            data_baru = {
-                "jenis_komoditas" : nama_komoditas, 
-                "nama_komoditas" : jenis_komoditas, 
-                "deskripsi" : deskripsi, 
-                "alamat" : alamat, 
-                "harga" : harga
-                }
-            data_cabairawit = json.load(data)
-            data_cabairawit["data"].append(data_baru)
-            data.seek(0)
-            json.dump(data_cabairawit, data, indent = 4)
+    elif jenis_komoditas == "bawang merah":
+        with open("komoditas_bawang_merah.csv", "a") as file:
+            kolom = ["jenis komoditas","nama komoditas","deskripsi","alamat","harga"]
+            writer = csv.DictWriter(file, fieldnames=kolom)
+            writer.writerow({'jenis komoditas' : jenis_komoditas, 'nama komoditas' : nama_komoditas, 'deskripsi' : deskripsi, 'alamat' : alamat, 'harga' : harga})
+            menu_kembali()
+    elif jenis_komoditas == "bawang putih":
+        with open("komoditas_bawang_putih.csv", "a") as file:
+            kolom = ["jenis komoditas","nama komoditas","deskripsi","alamat","harga"]
+            writer = csv.DictWriter(file, fieldnames=kolom)
+            writer.writerow({'jenis komoditas' : jenis_komoditas, 'nama komoditas' : nama_komoditas, 'deskripsi' : deskripsi, 'alamat' : alamat, 'harga' : harga})
             menu_kembali()
     
 def beli_komoditas():
     os.system("cls")
     keranjang = []
     harga = []
-    total = 0
+    total = sum(harga)
     def cek_keranjang():
-        if len(keranjang) != 1 and len(harga) != 1:
+        if len(keranjang) < 1 and len(harga) < 1:
             print("Maaf anda belum melakukan pembelian")
             sleep(1)
             os.system("cls")
@@ -156,8 +152,6 @@ def beli_komoditas():
         else:
             for i in keranjang:
                 print(i, end="")
-            for i in harga:
-                total += i
             print(f"Total Pembayaran : IDR {total}K")
             menu_kembali()
     menu = ["1. Beli", "2. Cek Keranjang"]
@@ -167,28 +161,28 @@ def beli_komoditas():
     opsi = int(input("Opsi : "))
     if opsi == 1:
         os.system("cls")
-        pencarian = input("Komoditas yang ingin dicari (beras/cabai merah/cabai rawit): ")
-        if pencarian != "beras" and pencarian != "cabai merah" and pencarian != "cabai rawit":
+        pencarian = input("Komoditas yang ingin dicari : ")
+        if pencarian != "beras" and pencarian != "cabai merah" and pencarian != "cabai rawit" and pencarian != "bawang putih" and pencarian != "bawang putih":
             print("Data yang anda cari tidak ada")
             sleep(1)
             os.system("cls")
             beli_komoditas()
         else:
-            if pencarian == "beras":
-                file_beras = open("komoditas_beras.json")
-                data = json.loads(file_beras.read())
-                for i in range(0, len(data['data'])):
-                    print(f"Kode {[i]}")
-                    print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
-                    print(f"Nama      : {data['data'][i]['nama_komoditas']}")
-                    print(f"Deskripsi : {data['data'][i]['deskripsi']}")
-                    print(f"Alamat    : {data['data'][i]['alamat']}")
-                    print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            if pencarian == "cabai merah":
+                data = []
+                df_cabaimerah = pd.read_csv("komoditas_cabai_merah.csv")
+                print(df_cabaimerah)
+                with open("komoditas_cabai_merah.csv", "r") as file :
+                    csv_merah = csv.DictReader(file)
+                    for row in csv_merah:
+                        data.append(row)
+                print(data)
+                print(len(data))
                 while True:
                     kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
-                    if kode in range(0, len(data['data'])):
-                        keranjang.append(data['data'][kode]['nama_komoditas'])
-                        harga.append(data['data'][kode]['harga'])
+                    if kode in range(0,len(data)):
+                        keranjang.append(data[kode]['nama komoditas'])
+                        harga.append(data[kode]['harga'])
                     ask = input("Mau membeli lagi?(Y/N): ")
                     if ask == "Y" or ask == "y":
                         True
@@ -197,54 +191,124 @@ def beli_komoditas():
                         sleep(2)
                         os.system("cls")
                         break
-            elif pencarian == "cabai merah":
-                file_cabaimerah = open("komoditas_cabai_merah.json")
-                data = json.loads(file_cabaimerah.read())
-                for i in range(0, len(data['data'])):
-                    print(f"Kode {[i+1]}")
-                    print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
-                    print(f"Nama      : {data['data'][i]['nama_komoditas']}")
-                    print(f"Deskripsi : {data['data'][i]['deskripsi']}")
-                    print(f"Alamat    : {data['data'][i]['alamat']}")
-                    print(f"Harga     : IDR {data['data'][i]['harga']}K")
-                while True:
-                    kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
-                    if kode in range(0, len(data['data'])):
-                        keranjang.append(data['data'][kode]['nama_komoditas'])
-                        harga.append(data['data'][kode]['harga'])
-                    ask = input("Mau membeli lagi?(Y/N): ")
-                    if ask == "Y" or ask == "y":
-                        True
-                    elif ask == "N" or ask == "n":
-                        print("Anda akan dibawa kembali ke menu awal")
-                        sleep(2)
-                        os.system("cls")
-                        break
-            elif pencarian == "cabai rawit":
-                file_cabairawit = open("komoditas_cabai_rawit.json")
-                data = json.loads(file_cabairawit.read())
-                for i in range(0, len(data['data'])):
-                    print(f"Kode {[i+1]}")
-                    print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
-                    print(f"Nama      : {data['data'][i]['nama_komoditas']}")
-                    print(f"Deskripsi : {data['data'][i]['deskripsi']}")
-                    print(f"Alamat    : {data['data'][i]['alamat']}")
-                    print(f"Harga     : IDR {data['data'][i]['harga']}K")
-                while True:
-                    kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
-                    if kode in range(0, len(data['data'])):
-                        keranjang.append(data['data'][kode]['nama_komoditas'])
-                        harga.append(data['data'][kode]['harga'])
-                    ask = input("Mau membeli lagi?(Y/N): ")
-                    if ask == "Y" or ask == "y":
-                        True
-                    elif ask == "N" or ask == "n":
-                        print("Anda akan dibawa kembali ke menu awal")
-                        sleep(2)
-                        os.system("cls")
-                        break
+                # row = []
+                # for i in df_cabaimerah:
+                #     row.append(i)
+                #     print(row)
+
+                    
+                    
+            # if pencarian == "beras":
+            #     file_beras = open("komoditas_beras.json")
+            #     data = json.loads(file_beras.read())
+            #     for i in range(0, len(data['data'])):
+            #         print(f"Kode {[i]}")
+            #         print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
+            #         print(f"Nama      : {data['data'][i]['nama_komoditas']}")
+            #         print(f"Deskripsi : {data['data'][i]['deskripsi']}")
+            #         print(f"Alamat    : {data['data'][i]['alamat']}")
+            #         print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            #     while True:
+            #         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
+            #         if kode in range(0, len(data['data'])):
+            #             keranjang.append(data['data'][kode]['nama_komoditas'])
+            #             harga.append(data['data'][kode]['harga'])
+            # elif pencarian == "cabai merah":
+            #     file_cabaimerah = open("komoditas_cabai_merah.json")
+            #     data = json.loads(file_cabaimerah.read())
+            #     for i in range(0, len(data['data'])):
+            #         print(f"Kode {[i]}")
+            #         print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
+            #         print(f"Nama      : {data['data'][i]['nama_komoditas']}")
+            #         print(f"Deskripsi : {data['data'][i]['deskripsi']}")
+            #         print(f"Alamat    : {data['data'][i]['alamat']}")
+            #         print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            #     while True:
+            #         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
+            #         if kode in range(0, len(data['data'])):
+            #             keranjang.append(data['data'][kode]['nama_komoditas'])
+            #             harga.append(data['data'][kode]['harga'])
+            #         ask = input("Mau membeli lagi?(Y/N): ")
+            #         if ask == "Y" or ask == "y":
+            #             True
+            #         elif ask == "N" or ask == "n":
+            #             print("Anda akan dibawa kembali ke menu awal")
+            #             sleep(2)
+            #             os.system("cls")
+            #             break
+            # elif pencarian == "cabai rawit":
+            #     file_cabairawit = open("komoditas_cabai_rawit.json")
+            #     data = json.loads(file_cabairawit.read())
+            #     for i in range(0, len(data['data'])):
+            #         print(f"Kode {[i]}")
+            #         print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
+            #         print(f"Nama      : {data['data'][i]['nama_komoditas']}")
+            #         print(f"Deskripsi : {data['data'][i]['deskripsi']}")
+            #         print(f"Alamat    : {data['data'][i]['alamat']}")
+            #         print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            #     while True:
+            #         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
+            #         if kode in range(0, len(data['data'])):
+            #             keranjang.append(data['data'][kode]['nama_komoditas'])
+            #             harga.append(data['data'][kode]['harga'])
+            #         ask = input("Mau membeli lagi?(Y/N): ")
+            #         if ask == "Y" or ask == "y":
+            #             True
+            #         elif ask == "N" or ask == "n":
+            #             print("Anda akan dibawa kembali ke menu awal")
+            #             sleep(2)
+            #             os.system("cls")
+            #             break
+            # elif pencarian == "bawang merah":
+            #     file_bawangmerah = open("komoditas_bawang_merah.json")
+            #     data = json.loads(file_bawangmerah.read())
+            #     for i in range(0, len(data['data'])):
+            #         print(f"Kode {[i]}")
+            #         print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
+            #         print(f"Nama      : {data['data'][i]['nama_komoditas']}")
+            #         print(f"Deskripsi : {data['data'][i]['deskripsi']}")
+            #         print(f"Alamat    : {data['data'][i]['alamat']}")
+            #         print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            #     while True:
+            #         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
+            #         if kode in range(0, len(data['data'])):
+            #             keranjang.append(data['data'][kode]['nama_komoditas'])
+            #             harga.append(data['data'][kode]['harga'])
+            #         ask = input("Mau membeli lagi?(Y/N): ")
+            #         if ask == "Y" or ask == "y":
+            #             True
+            #         elif ask == "N" or ask == "n":
+            #             print("Anda akan dibawa kembali ke menu awal")
+            #             sleep(2)
+            #             os.system("cls")
+            #             break
+            # elif pencarian == "bawang putih":
+            #     file_bawangputih = open("komoditas_bawang_putih.json")
+            #     data = json.loads(file_bawangputih.read())
+            #     for i in range(0, len(data['data'])):
+            #         print(f"Kode {[i]}")
+            #         print(f"Jenis     : {data['data'][i]['jenis_komoditas']}")
+            #         print(f"Nama      : {data['data'][i]['nama_komoditas']}")
+            #         print(f"Deskripsi : {data['data'][i]['deskripsi']}")
+            #         print(f"Alamat    : {data['data'][i]['alamat']}")
+            #         print(f"Harga     : IDR {data['data'][i]['harga']}K")
+            #     while True:
+            #         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
+            #         if kode in range(0, len(data['data'])):
+            #             keranjang.append(data['data'][kode]['nama_komoditas'])
+            #             harga.append(data['data'][kode]['harga'])
+            #         ask = input("Mau membeli lagi?(Y/N): ")
+            #         if ask == "Y" or ask == "y":
+            #             True
+            #         elif ask == "N" or ask == "n":
+            #             print("Anda akan dibawa kembali ke menu awal")
+            #             sleep(2)
+            #             os.system("cls")
+            #             break
     elif opsi == 2:
         cek_keranjang()
+    else:
+        beli_komoditas()
             
 def menu():
     opsi = ["1. Cek harga", "2. Jual Komoditas", "3. Beli Komoditas", "4. Exit"]
