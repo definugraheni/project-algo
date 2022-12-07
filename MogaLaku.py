@@ -1,6 +1,5 @@
 import pandas as pd
 import csv
-import json
 import os
 from time import sleep
 
@@ -23,7 +22,7 @@ def signin(name,pw):
         print("Anda akan dikembalikan ke menu login")
         sleep(2)
         os.system("cls")
-        begin()
+        mulai()
 
 def signup(name,pw):
     file = open('data_account.txt', "a")
@@ -140,18 +139,25 @@ def jual_komoditas():
     
 def beli_komoditas():
     os.system("cls")
-    keranjang = []
-    harga = []
-    total = sum(harga)
     def cek_keranjang():
-        if len(keranjang) < 1 and len(harga) < 1:
+        keranjang = []
+        harga = []
+        total = sum(harga)
+        with open("keranjang.csv", "r") as file:
+            writer = csv.DictReader(file)
+            for row in writer:
+                keranjang.append(row)
+        if len(keranjang) < 1 :
             print("Maaf anda belum melakukan pembelian")
             sleep(1)
             os.system("cls")
             beli_komoditas()
         else:
             for i in keranjang:
-                print(i, end="")
+                harga.append(i['harga'])
+            for i in keranjang:
+                print(i['nama komoditas'])
+            print(harga)
             print(f"Total Pembayaran : IDR {total}K")
             menu_kembali()
     menu = ["1. Beli", "2. Cek Keranjang"]
@@ -177,12 +183,16 @@ def beli_komoditas():
                     for row in csv_merah:
                         data.append(row)
                 print(data)
-                print(len(data))
                 while True:
                     kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
                     if kode in range(0,len(data)):
-                        keranjang.append(data[kode]['nama komoditas'])
-                        harga.append(data[kode]['harga'])
+                        with open("keranjang.csv", "a") as file:
+                            kolom = ["nama komoditas","harga"]
+                            writer = csv.DictWriter(file, fieldnames=kolom)
+                            writer.writerow({"nama komoditas" : (data[kode]['nama komoditas']), 'harga' : (data[kode]['harga'])})
+                        # print(data[kode]['nama komoditas'])
+                        # keranjang.append(data[kode]['nama komoditas'])
+                        # harga.append(data[kode]['harga'])
                     ask = input("Mau membeli lagi?(Y/N): ")
                     if ask == "Y" or ask == "y":
                         True
@@ -190,7 +200,7 @@ def beli_komoditas():
                         print("Anda akan dibawa kembali ke menu awal")
                         sleep(2)
                         os.system("cls")
-                        break
+                        beli_komoditas()
                 # row = []
                 # for i in df_cabaimerah:
                 #     row.append(i)
