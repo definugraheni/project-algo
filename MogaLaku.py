@@ -226,7 +226,8 @@ def beli_komoditas():
                     beli_komoditas()
                 else:
                     print(df_cabai)
-                    while True:
+                    loop = True
+                    while loop == True:
                         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
                         if kode in range(0,len(data)):
                             with open("keranjang.csv", "a") as file:
@@ -235,8 +236,9 @@ def beli_komoditas():
                                 writer.writerow({"nama komoditas" : (data[kode]['nama komoditas']), 'harga' : (data[kode]['harga'])})
                         ask = input("Mau membeli lagi?(Y/N): ")
                         if ask == "Y" or ask == "y":
-                            True
+                            loop = True
                         elif ask == "N" or ask == "n":
+                            loop = False
                             print("Anda akan dibawa kembali ke menu awal")
                             sleep(2)
                             os.system("cls")
@@ -255,7 +257,8 @@ def beli_komoditas():
                     beli_komoditas()
                 else:
                     print(df_cabai)
-                    while True:
+                    loop = True
+                    while loop == True:
                         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
                         if kode in range(0,len(data)):
                             with open("keranjang.csv", "a") as file:
@@ -264,8 +267,9 @@ def beli_komoditas():
                                 writer.writerow({"nama komoditas" : (data[kode]['nama komoditas']), 'harga' : (data[kode]['harga'])})
                         ask = input("Mau membeli lagi?(Y/N): ")
                         if ask == "Y" or ask == "y":
-                            True
+                            loop = True
                         elif ask == "N" or ask == "n":
+                            loop = False
                             print("Anda akan dibawa kembali ke menu awal")
                             sleep(2)
                             os.system("cls")
@@ -284,7 +288,8 @@ def beli_komoditas():
                     beli_komoditas()
                 else:
                     print(df_bawang)
-                    while True:
+                    loop = True
+                    while loop == True:
                         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
                         if kode in range(0,len(data)):
                             with open("keranjang.csv", "a") as file:
@@ -293,8 +298,9 @@ def beli_komoditas():
                                 writer.writerow({"nama komoditas" : (data[kode]['nama komoditas']), 'harga' : (data[kode]['harga'])})
                         ask = input("Mau membeli lagi?(Y/N): ")
                         if ask == "Y" or ask == "y":
-                            True
+                            loop = True
                         elif ask == "N" or ask == "n":
+                            loop = False
                             print("Anda akan dibawa kembali ke menu awal")
                             sleep(2)
                             os.system("cls")
@@ -313,7 +319,8 @@ def beli_komoditas():
                     beli_komoditas()
                 else:
                     print(df_bawang)
-                    while True:
+                    loop = True
+                    while loop == True:
                         kode = int(input("\nMasukkan kode komoditas yang ingin dibeli : "))
                         if kode in range(0,len(data)):
                             with open("keranjang.csv", "a") as file:
@@ -322,8 +329,9 @@ def beli_komoditas():
                                 writer.writerow({"nama komoditas" : (data[kode]['nama komoditas']), 'harga' : (data[kode]['harga'])})
                         ask = input("Mau membeli lagi?(Y/N): ")
                         if ask == "Y" or ask == "y":
-                            True
+                            loop = True
                         elif ask == "N" or ask == "n":
+                            loop = False
                             print("Anda akan dibawa kembali ke menu awal")
                             sleep(2)
                             os.system("cls")
@@ -349,6 +357,7 @@ def menu():
     elif opsi_1 == 3:
         beli_komoditas()
     elif opsi_1 == 4:
+        print("\nTERIMA KASIH TELAH MENGGUNAKAN JASA KAMI")
         exit()
     else:
         print("Anda salah memasukkan opsi")
